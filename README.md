@@ -1,6 +1,12 @@
 # Sweet Barista - Coffee Shop Game
 
+[![GitHub Pages](https://img.shields.io/badge/Play%20Live-GitHub%20Pages-blue)](https://dotan232.github.io/SweetBarista/)
+[![Development Status](https://img.shields.io/badge/Status-91%25%20Complete-brightgreen)]()
+[![License](https://img.shields.io/badge/License-Open%20Source-green)]()
+
 A browser-based casual arcade game where you play as a barista dropping sugar cubes into coffee cups moving on a conveyor belt. Complete 15 progressively challenging levels with increasing speeds and complexity.
+
+## 🌟 **[➤ PLAY NOW - Live Demo](https://dotan232.github.io/SweetBarista/)**
 
 ## 🎮 Game Overview
 
@@ -138,10 +144,14 @@ The game expects these assets (will use placeholders if missing):
 
 ## 🚢 Deployment
 
-### GitHub Pages (Recommended)
+### GitHub Pages (Current Deployment)
+This game is currently deployed at: **https://dotan232.github.io/SweetBarista/**
+
+To set up your own deployment:
 1. Push code to GitHub repository
-2. Enable GitHub Pages in repository settings
-3. Game will be available at `https://yourusername.github.io/repository-name`
+2. Go to repository Settings → Pages
+3. Set source to "Deploy from a branch: master"
+4. Game will be available at `https://yourusername.github.io/repository-name`
 
 ### Any Static Host
 The game is a simple static website - upload all files to any web server:
