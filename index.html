@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Sweet Barista - Coffee Shop Game. Drop sugar cubes into coffee cups in this fun arcade game!">
+    <title>Sweet Barista - Coffee Shop Game</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Prevent zooming on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+    <div class="game-layout">
+        <!-- Desktop Top Ad -->
+        <div id="topAd" class="ad-container desktop-ad">
+            <div class="ad-placeholder">
+                Advertisement (728x90)
+            </div>
+        </div>
+        
+        <!-- Mobile Top Ad -->
+        <div id="mobileTopAd" class="ad-container mobile-ad">
+            <div class="ad-placeholder">
+                Advertisement (320x50)
+            </div>
+        </div>
+        
+        <!-- Game Canvas Container -->
+        <div class="game-card">
+            <!-- Game Header - v0 Two-Row Layout -->
+            <div id="gameHeader" class="game-header-v0" style="display: none;">
+                <!-- Top Row: Level Info, Timer, Audio Controls -->
+                <div class="flex items-center justify-between w-full">
+                    <!-- Left: Level Info -->
+                    <div class="flex items-center">
+                        <h2 id="levelNumber" class="text-xl font-bold text-amber-800">
+                            Level 1 <span id="levelDifficulty" class="text-sm font-normal text-amber-600">TUTORIAL</span>
+                        </h2>
+                    </div>
+                    
+                    <!-- Center: Timer -->
+                    <div class="timer-container">
+                        <div id="timerBar" class="timer-bar">
+                            <div id="timerFill" class="timer-fill bg-primary"></div>
+                        </div>
+                        <span id="timerDisplay" class="timer-display font-mono">1:00</span>
+                    </div>
+                    
+                    <!-- Right: Audio Controls + Pause Button -->
+                    <div class="flex items-center gap-4">
+                        <!-- Audio Controls (grouped together) -->
+                        <div class="flex items-center gap-1">
+                            <button id="soundBtn" class="audio-btn highlighted" title="Toggle Sound Effects">🔊</button>
+                            <button id="musicBtn" class="audio-btn highlighted" title="Toggle Background Music">🎵</button>
+                        </div>
+                        
+                        <!-- Pause Button (separated with gap) -->
+                        <button id="pauseBtn" class="pause-btn" title="Pause Game">⏸</button>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row: Progress Badge (Centered below Timer) -->
+                <div class="flex justify-center items-center w-full">
+                    <div id="progressBadge" class="progress-badge bg-white rounded-full px-4 py-1.5 shadow border border-gray-200">
+                        <span class="progress-label">Cups completed:</span>
+                        <span id="progressCurrent" class="progress-current ml-1">0</span>
+                        <span class="progress-separator mx-0.5">/</span>
+                        <span id="progressTotal" class="progress-total">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <canvas id="gameCanvas" width="1280" height="720">
+                Your browser does not support the HTML5 canvas tag.
+                Please upgrade to a modern browser to play this game.
+            </canvas>
+            
+            <!-- Loading Screen -->
+            <div id="loadingScreen" class="absolute inset-0 bg-white flex items-center justify-center z-50">
+                <div class="loading-content">
+                    <h2 class="text-xl font-semibold text-gray-600 mb-4">Loading Sweet Barista...</h2>
+                    <div class="w-64 h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
+                        <div id="loadingProgress" class="h-full bg-primary transition-all duration-300 ease-out rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p id="loadingText" class="text-sm text-gray-500">Loading assets...</p>
+                </div>
+            </div>
+            
+            <!-- Touch Controls for Mobile - Hidden for simplified UI -->
+            <div id="touchControls" class="touch-controls" style="display: none !important;">
+                <button id="dropButton" class="drop-button">DROP SUGAR</button>
+            </div>
+        </div>
+        
+        <!-- Desktop Bottom Ad -->
+        <div id="bottomAd" class="ad-container desktop-ad">
+            <div class="ad-placeholder">
+                Advertisement (728x90)
+            </div>
+        </div>
+        
+        <!-- Game Instructions -->
+        <div class="text-center text-xs text-gray-500 max-w-md leading-relaxed px-4">
+            <p><strong class="text-gray-600 font-semibold">Desktop:</strong> Press SPACEBAR or click anywhere to drop sugar cubes</p>
+            <p><strong class="text-gray-600 font-semibold">Mobile:</strong> Tap anywhere on the screen to drop sugar cubes</p>
+        </div>
+    </div>
+    
+    <!-- Audio elements for preloading -->
+    <div class="audio-preload" style="display: none;">
+        <audio id="audioSugarDrop" preload="auto">
+            <source src="audio/sugar_drop.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioSuccessHit" preload="auto">
+            <source src="audio/success_hit.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioMiss" preload="auto">
+            <source src="audio/miss.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioSugarSplash" preload="auto">
+            <source src="audio/sugar_splash.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioLevelComplete" preload="auto">
+            <source src="audio/level_complete.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioLevelFail" preload="auto">
+            <source src="audio/level_fail.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioTimeWarning" preload="auto">
+            <source src="audio/time_warning.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioGameBgm" preload="auto" loop>
+            <source src="audio/game_bgm.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audioOverfill" preload="auto">
+            <source src="audio/overfill.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+    
+    <script type="module" src="src/main.js?v=77"></script>
+</body>
+</html>

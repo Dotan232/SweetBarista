@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* shadcn/ui CSS Variables */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 45% 35%; /* Warmer brown-orange matching v0 reference */
+    --card: 0 0% 100%;
+    --card-foreground: 20 45% 35%; /* Warmer brown-orange matching v0 reference */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 22 95% 54%; /* Orange-500 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 22 95% 54%; /* Orange-500 for focus rings */
+    --radius: 0.75rem; /* 12px - matching your card-radius */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 22 95% 54%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 22 95% 54%;
+  }
+}
+
+/* Game-specific base styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html, body {
+    @apply h-full font-sans;
+    background: linear-gradient(to bottom, theme('colors.amber.50'), theme('colors.orange.100'));
+    color: theme('colors.gray.600');
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+  }
+
+  /* Prevent mobile scrolling and zooming - preserve game mechanics */
+  body {
+    @apply fixed w-full;
+    height: 100vh;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Game-specific component classes */
+@layer components {
+  /* Container matching your current layout */
+  .game-layout {
+    @apply flex flex-col items-center min-h-screen p-2.5 gap-2.5;
+  }
+  
+  /* Game container with v0 card style */
+  .game-card {
+    @apply relative w-full max-w-screen-xl;
+    background: linear-gradient(to bottom, theme('colors.sky.200'), theme('colors.sky.300'));
+    @apply rounded-xl overflow-hidden shadow-card-lg flex flex-col;
+  }
+  
+  /* Game header matching v0 exact layout */
+  .game-header-v0 {
+    @apply bg-amber-100 border-b border-black/10 px-6 py-4 flex flex-col min-h-20 font-sans shadow-none relative gap-3 z-10;
+  }
+  
+  /* Header row layouts */
+  .header-row-top {
+    @apply flex justify-between items-center w-full;
+  }
+  
+  .header-row-bottom {
+    @apply flex justify-center items-center w-full;
+  }
+  
+  /* Header sections */
+  .header-section-left {
+    @apply flex items-center gap-2 flex-none;
+  }
+  
+  .header-section-center {
+    @apply flex items-center flex-none;
+  }
+  
+  .header-section-right {
+    @apply flex items-center gap-2 flex-none;
+  }
+  
+  /* Button components */
+  .header-btn {
+    @apply w-9 h-9 rounded-md border border-gray-200 bg-white hover:bg-gray-50 active:bg-gray-100 flex items-center justify-center text-sm font-medium transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+  
+  .audio-btn {
+    @apply header-btn text-gray-600 hover:text-gray-700;
+  }
+  
+  .pause-btn {
+    @apply header-btn text-gray-600 hover:text-gray-700;
+  }
+  
+  /* v0 Design Pattern: Highlighted state for active buttons */
+  .audio-btn.highlighted {
+    @apply bg-primary text-primary-foreground shadow-md border-primary;
+  }
+  
+  .pause-btn.highlighted {
+    @apply bg-primary text-primary-foreground shadow-md border-primary;
+  }
+  
+  .audio-btn.disabled {
+    @apply bg-gray-100 text-gray-400 opacity-60 cursor-not-allowed;
+  }
+  
+  .audio-btn.disabled:hover {
+    @apply bg-gray-100 text-gray-400;
+  }
+  
+  /* Typography components - exact v0 specifications */
+  /* v0 amber colors - explicit definitions */
+  .text-amber-800 {
+    color: #92400E;
+  }
+  
+  .text-amber-600 {
+    color: #D97706;
+  }
+  
+  /* Progress badge component */
+  .progress-badge {
+    @apply flex items-center gap-1 text-xs;
+  }
+  
+  .progress-label {
+    @apply text-muted-foreground;
+  }
+  
+  .progress-current {
+    @apply text-foreground font-semibold text-sm;
+  }
+  
+  .progress-separator {
+    @apply text-muted-foreground font-normal;
+  }
+  
+  .progress-total {
+    @apply text-foreground font-semibold text-sm;
+  }
+  
+  /* Timer components */
+  .timer-container {
+    @apply flex items-center gap-2;
+  }
+  
+  .timer-bar {
+    @apply w-32 h-2 bg-amber-200 rounded-full overflow-hidden;
+  }
+  
+  .timer-fill {
+    @apply h-full transition-all duration-1000 ease-linear rounded-full;
+  }
+  
+  .timer-display {
+    @apply text-sm font-mono text-amber-800 min-w-10 text-center;
+  }
+  
+  /* Ad containers */
+  .ad-container {
+    @apply flex justify-center items-center bg-gray-50 border border-gray-200 rounded-lg;
+  }
+  
+  .ad-placeholder {
+    @apply text-xs text-gray-400 p-2;
+  }
+  
+  .desktop-ad {
+    @apply hidden md:flex h-24;
+  }
+  
+  .mobile-ad {
+    @apply flex md:hidden h-12;
+  }
+  
+  /* Loading screen */
+  .loading-overlay {
+    @apply absolute inset-0 bg-white/95 flex items-center justify-center z-50;
+  }
+  
+  .loading-content {
+    @apply text-center;
+  }
+  
+  .loading-title {
+    @apply text-xl font-semibold text-gray-600 mb-4;
+  }
+  
+  .loading-bar-container {
+    @apply w-64 h-2 bg-gray-200 rounded-full overflow-hidden mb-2;
+  }
+  
+  .loading-bar-fill {
+    @apply h-full bg-primary transition-all duration-300 ease-out rounded-full;
+  }
+  
+  .loading-text {
+    @apply text-sm text-gray-500;
+  }
+  
+  /* Instructions */
+  .game-instructions {
+    @apply text-center text-xs text-gray-500 max-w-md leading-relaxed;
+  }
+  
+  /* Touch controls - hidden by default */
+  .touch-controls {
+    @apply absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20;
+  }
+  
+  .drop-button {
+    @apply px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow-lg;
+    @apply hover:bg-primary-600 active:bg-primary-700 transition-colors;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/20;
+  }
+}

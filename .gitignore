@@ -1,0 +1,54 @@
+# Sugar Cube Game - Git Ignore File
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+npm-cache/
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# Local development files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Runtime files
+*.tmp
+nul
+
+# Playwright MCP (development tool)
+.playwright-mcp/
+
+# Package lock files (optional - remove this line if you want to include package-lock.json)
+# package-lock.json
+
+# User-specific development files
+.claude/
+.cursor/
+dummy.js
